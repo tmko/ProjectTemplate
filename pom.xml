@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project>
+    <!-- Maven 3.6+ -->
+
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>tako.research</groupId>
+    <artifactId>Simple-Project-Template</artifactId>
+    <packaging>pom</packaging>
+    <version>${revision}</version>
+
+    <modules>
+        <module>Implementation</module>
+    </modules>
+
+
+
+    <properties>
+        <!-- module revision should match release. -->
+        <!-- Don't change the name -->
+        <revision>1.0.0-SNAPSHOT</revision>
+
+        <!-- global setting -->
+        <maven.compiler.source>1.8</maven.compiler.source>
+        <maven.compiler.target>1.8</maven.compiler.target>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        
+    </properties>
+
+
+    <dependencies>
+        <!-- All Children modules will inherit every dependencies  -->
+        <!-- be careful when adding more -->
+
+        <dependency>
+            <groupId>org.yaml</groupId>
+            <artifactId>snakeyaml</artifactId>
+            <version>1.16</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>1.18.4</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+            <version>1.7.25</version>
+        </dependency>
+
+        <dependency>
+            <groupId>ch.qos.logback</groupId>
+            <artifactId>logback-classic</artifactId>
+            <version>1.2.3</version>
+        </dependency>
+
+        <dependency>
+            <groupId>ch.qos.logback</groupId>
+            <artifactId>logback-core</artifactId>
+            <version>1.2.3</version>
+        </dependency>
+
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.12</version>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
+
+
+</project>

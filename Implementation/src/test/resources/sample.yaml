@@ -1,0 +1,25 @@
+retries: 2
+
+sftpDeletion:
+  maxage: 20000
+
+hdfsDeletion:
+  maxage: 50000
+
+sftpConfigure:
+  timeout: 3
+  serviceManagerURL: "http://www.google.com"
+  ca:
+    port: 2122
+    host: "sftp.some.host"
+    secretId:
+    password:
+  us:
+    port: 2122
+    host: "sftp.some.host"
+    secretId: 28647
+    password:
+
+usCompanies: > #  > means concat all input in 1 string
+  12313, 123123123, 123123
+  32424
