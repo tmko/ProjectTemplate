@@ -13,8 +13,6 @@
         <module>Implementation</module>
     </modules>
 
-
-
     <properties>
         <!-- module revision should match release. -->
         <!-- Don't change the name -->
@@ -24,7 +22,13 @@
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        
+
+        <!-- dependency version -->
+        <snakeyaml-version>1.16</snakeyaml-version>
+        <lombok-version>1.18.4</lombok-version>
+        <slf4j-api-version>1.7.25</slf4j-api-version>
+        <logback-version>1.2.3</logback-version>
+        <junit-verion>4.12</junit-verion>
     </properties>
 
 
@@ -35,37 +39,37 @@
         <dependency>
             <groupId>org.yaml</groupId>
             <artifactId>snakeyaml</artifactId>
-            <version>1.16</version>
+            <version>${snakeyaml-version}</version>
         </dependency>
 
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
-            <version>1.18.4</version>
+            <version>${lombok-version}</version>
         </dependency>
 
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-api</artifactId>
-            <version>1.7.25</version>
+            <version>${slf4j-api-version}</version>
         </dependency>
 
         <dependency>
             <groupId>ch.qos.logback</groupId>
             <artifactId>logback-classic</artifactId>
-            <version>1.2.3</version>
+            <version>${logback-version}</version>
         </dependency>
 
         <dependency>
             <groupId>ch.qos.logback</groupId>
             <artifactId>logback-core</artifactId>
-            <version>1.2.3</version>
+            <version>${logback-version}</version>
         </dependency>
 
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
-            <version>4.12</version>
+            <version>${junit-verion}</version>
             <scope>test</scope>
         </dependency>
     </dependencies>
