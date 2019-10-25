@@ -17,6 +17,7 @@
         <maven-shade-plugin-version>3.2.1</maven-shade-plugin-version>
         <dependency-check-maven-version>5.1.0</dependency-check-maven-version>
         <maven-project-info-reports-plugin-version>2.9</maven-project-info-reports-plugin-version>
+        <dependency.check.skip>true</dependency.check.skip>
     </properties>
 
     <build>
@@ -36,7 +37,7 @@
                     <archive>
                         <manifest>
                             <addClasspath>true</addClasspath>
-                            <mainClass>Entrant.MainClass</mainClass>
+                            <mainClass>tako.kitchen.entrant.MainClass</mainClass>
                         </manifest>
                     </archive>
                 </configuration>
@@ -63,6 +64,7 @@
                 <groupId>org.owasp</groupId>
                 <artifactId>dependency-check-maven</artifactId>
                 <version>${dependency-check-maven-version}</version>
+                <configuration><skip>${dependency.check.skip}</skip></configuration>
                 <executions>
                     <execution>
                         <goals>

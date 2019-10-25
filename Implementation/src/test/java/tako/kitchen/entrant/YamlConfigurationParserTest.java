@@ -1,4 +1,4 @@
-package Entrant;
+package tako.kitchen.entrant;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -12,7 +12,7 @@ import java.io.InputStream;
 import static org.hamcrest.core.Is.is;
 import static org.hamcrest.core.IsNot.not;
 import static org.hamcrest.core.IsNull.nullValue;
-import static Entrant.YamlConfigurationParser.toPojo;
+import static tako.kitchen.entrant.YamlConfigurationParser.toPojo;
 
 public class YamlConfigurationParserTest {
 

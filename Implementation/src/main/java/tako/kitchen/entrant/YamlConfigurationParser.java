@@ -1,4 +1,4 @@
-package Entrant;
+package tako.kitchen.entrant;
 
 
 import lombok.extern.slf4j.Slf4j;
