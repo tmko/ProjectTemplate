@@ -15,9 +15,9 @@
         <maven-jar-plugin-version>3.1.2</maven-jar-plugin-version>
         <maven-surefire-plugin-version>2.22.1</maven-surefire-plugin-version>
         <maven-shade-plugin-version>3.2.1</maven-shade-plugin-version>
-        <dependency-check-maven-version>5.1.0</dependency-check-maven-version>
+        <dependency-check-maven-version>5.2.2</dependency-check-maven-version>
         <maven-project-info-reports-plugin-version>2.9</maven-project-info-reports-plugin-version>
-        <dependency.check.skip>true</dependency.check.skip>
+        <dependency-check-skip>true</dependency-check-skip>
     </properties>
 
     <build>
@@ -58,32 +58,30 @@
                 </configuration>
             </plugin>
 
-            <!-- This performance OWASP dependency security check -->
-            <!-- report is found in target/dependency-check-report.html -->
-            <plugin>
-                <groupId>org.owasp</groupId>
-                <artifactId>dependency-check-maven</artifactId>
-                <version>${dependency-check-maven-version}</version>
-                <configuration><skip>${dependency.check.skip}</skip></configuration>
-                <executions>
-                    <execution>
-                        <goals>
-                            <goal>check</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
         </plugins>
     </build>
 
     <!-- this block is for mvn site -->
     <reporting>
         <plugins>
+            <!-- This performance OWASP dependency security check -->
+            <!-- report is found in target/dependency-check-report.html -->
+            <!-- https://jeremylong.github.io/DependencyCheck/dependency-check-maven/ -->
+            <plugin>
+                <groupId>org.owasp</groupId>
+                <artifactId>dependency-check-maven</artifactId>
+                <version>${dependency-check-maven-version}</version>
+                <reportSets><reportSet><reports><report>aggregate</report></reports></reportSet></reportSets>
+            </plugin>
+
+
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-project-info-reports-plugin</artifactId>
                 <version>${maven-project-info-reports-plugin-version}</version>
             </plugin>
+
+
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-report-plugin</artifactId>
