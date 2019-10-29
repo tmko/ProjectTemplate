@@ -25,6 +25,9 @@
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
                 <version>${maven-surefire-plugin-version}</version>
+                <configuration>
+                    <workingDirectory>${project.build.directory}/JunitTempRoot/</workingDirectory>
+                </configuration>
             </plugin>
 
             <plugin>
