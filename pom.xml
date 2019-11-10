@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <!-- Maven 3.6+ -->
 
     <modelVersion>4.0.0</modelVersion>
@@ -11,11 +13,12 @@
 
     <modules>
         <module>Implementation</module>
+        <module>Package</module>
     </modules>
 
     <properties>
         <!-- module revision should match release. -->
-        <!-- Don't change the name -->
+        <!-- Don't change the tag name -->
         <revision>1.0.0-SNAPSHOT</revision>
 
         <!-- global setting -->
@@ -23,7 +26,18 @@
         <maven.compiler.target>1.8</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
-        <!-- dependency version -->
+
+        <!-- maven plugins version -->
+        <dependency-check-maven-version>5.2.2</dependency-check-maven-version>
+        <maven-project-info-reports-plugin-version>2.9</maven-project-info-reports-plugin-version>
+        <maven-site-plugin-version>3.7</maven-site-plugin-version>
+
+        <maven-surefire-plugin-version>2.22.1</maven-surefire-plugin-version>
+        <maven-jar-plugin-version>3.1.2</maven-jar-plugin-version>
+        <maven-assembly-plugin-version>3.2.0</maven-assembly-plugin-version>
+        <maven-dependency-plugin-version>3.1.1</maven-dependency-plugin-version>
+
+        <!-- common dependency version -->
         <snakeyaml-version>1.16</snakeyaml-version>
         <lombok-version>1.18.4</lombok-version>
         <slf4j-api-version>1.7.25</slf4j-api-version>
@@ -32,10 +46,8 @@
     </properties>
 
 
+    <dependencyManagement>
     <dependencies>
-        <!-- All Children modules will inherit every dependencies  -->
-        <!-- be careful when adding more -->
-
         <dependency>
             <groupId>org.yaml</groupId>
             <artifactId>snakeyaml</artifactId>
@@ -73,6 +85,65 @@
             <scope>test</scope>
         </dependency>
     </dependencies>
+    </dependencyManagement>
 
+
+    <build>
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-surefire-plugin</artifactId>
+                    <version>${maven-surefire-plugin-version}</version>
+                </plugin>
+
+
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-jar-plugin</artifactId>
+                    <version>${maven-jar-plugin-version}</version>
+                </plugin>
+
+                <!-- The jar package with all dependency -->
+                <plugin>
+                    <artifactId>maven-assembly-plugin</artifactId>
+                    <version>${maven-assembly-plugin-version}</version>
+                    <configuration>
+                        <descriptorRefs>
+                            <descriptorRef>jar-with-dependencies</descriptorRef>
+                        </descriptorRefs>
+                    </configuration>
+                    <executions>
+                        <execution>
+                            <id>make-assembly</id>
+                            <phase>package</phase>
+                            <goals><goal>single</goal></goals>
+                        </execution>
+                    </executions>
+                </plugin>
+
+                <!-- The following block copy dependency to Package module/ lib folder -->
+                <!-- https://stackoverflow.com/questions/8310539/
+                     how-to-copy-dependencies-jars-without-test-jars-to-a-directory-using-maven
+                -->
+                <plugin>
+                    <artifactId>maven-dependency-plugin</artifactId>
+                    <version>${maven-dependency-plugin-version}</version>
+                    <executions>
+                        <execution>
+                            <phase>package</phase>
+                            <goals>
+                                <goal>copy-dependencies</goal>
+                            </goals>
+                            <configuration>
+                                <outputDirectory>${project.build.directory}/lib</outputDirectory>
+                                <includeScope>runtime</includeScope>
+                            </configuration>
+                        </execution>
+                    </executions>
+                </plugin>
+            </plugins>
+        </pluginManagement>
+    </build>
 
 </project>

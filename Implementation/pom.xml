@@ -11,12 +11,37 @@
 
     <artifactId>Implementation</artifactId>
 
-    <properties>
-        <maven-jar-plugin-version>3.1.2</maven-jar-plugin-version>
-        <maven-surefire-plugin-version>2.22.1</maven-surefire-plugin-version>        
-        <dependency-check-maven-version>5.2.2</dependency-check-maven-version>
-        <maven-project-info-reports-plugin-version>2.9</maven-project-info-reports-plugin-version>        
-    </properties>
+    <dependencies>
+        <dependency>
+            <groupId>org.yaml</groupId>
+            <artifactId>snakeyaml</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>ch.qos.logback</groupId>
+            <artifactId>logback-classic</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>ch.qos.logback</groupId>
+            <artifactId>logback-core</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+        </dependency>
+    </dependencies>
 
     <build>
         <plugins>
@@ -24,16 +49,11 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
-                <version>${maven-surefire-plugin-version}</version>
-                <configuration>
-                    <workingDirectory>${project.build.directory}/JunitTempRoot/</workingDirectory>
-                </configuration>
             </plugin>
 
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-jar-plugin</artifactId>
-                <version>${maven-jar-plugin-version}</version>
                 <configuration>
                     <archive>
                         <manifest>
@@ -44,20 +64,14 @@
                 </configuration>
             </plugin>
 
+            <!-- The jar package with all dependency -->
             <plugin>
                 <artifactId>maven-assembly-plugin</artifactId>
-                <configuration>
-                    <descriptorRefs>
-                        <descriptorRef>jar-with-dependencies</descriptorRef>
-                    </descriptorRefs>
-                </configuration>
-                <executions>
-                    <execution>
-                        <id>make-assembly</id>
-                        <phase>package</phase>
-                        <goals><goal>single</goal></goals>
-                    </execution>
-                </executions>
+            </plugin>
+
+            <!-- The following block copy dependency to Package module/ lib folder -->
+            <plugin>
+                <artifactId>maven-dependency-plugin</artifactId>
             </plugin>
 
         </plugins>
@@ -76,14 +90,21 @@
                 <reportSets><reportSet><reports><report>aggregate</report></reports></reportSet></reportSets>
             </plugin>
 
+            <!-- this will create a site for the module -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-site-plugin</artifactId>
+                <version>${maven-site-plugin-version}</version>
+            </plugin>
 
+            <!-- this insert module info to the site above -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-project-info-reports-plugin</artifactId>
                 <version>${maven-project-info-reports-plugin-version}</version>
             </plugin>
 
-
+            <!-- this insert testing info to the site above -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-report-plugin</artifactId>
