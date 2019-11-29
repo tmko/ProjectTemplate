@@ -45,12 +45,6 @@
 
     <build>
         <plugins>
-
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-surefire-plugin</artifactId>
-            </plugin>
-
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-jar-plugin</artifactId>
@@ -90,12 +84,6 @@
                 <reportSets><reportSet><reports><report>aggregate</report></reports></reportSet></reportSets>
             </plugin>
 
-            <!-- this will create a site for the module -->
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-site-plugin</artifactId>
-                <version>${maven-site-plugin-version}</version>
-            </plugin>
 
             <!-- this insert module info to the site above -->
             <plugin>
@@ -108,8 +96,9 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-report-plugin</artifactId>
-                <version>${maven-surefire-plugin-version}</version>
+                <version>${maven-surefire-report-version}</version>
             </plugin>
+
         </plugins>
     </reporting>
 </project>
