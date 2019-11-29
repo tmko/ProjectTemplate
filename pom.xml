@@ -18,7 +18,7 @@
 
     <properties>
         <!-- module revision should match release. -->
-        <!-- Don't change the tag name -->
+        <!-- Don't change this tag name -->
         <revision>1.0.0-SNAPSHOT</revision>
 
         <!-- global setting -->
@@ -36,6 +36,7 @@
         <maven-assembly-plugin-version>3.2.0</maven-assembly-plugin-version>
         <maven-dependency-plugin-version>3.1.1</maven-dependency-plugin-version>
         <maven-resources-plugin-version>3.0.2</maven-resources-plugin-version>
+        <maven-resources-plugin-version>3.1.0</maven-resources-plugin-version>
 
         <!-- common dependency version -->
         <snakeyaml-version>1.16</snakeyaml-version>
@@ -43,6 +44,9 @@
         <slf4j-api-version>1.7.25</slf4j-api-version>
         <logback-version>1.2.3</logback-version>
         <junit-verion>4.12</junit-verion>
+
+        <!-- packaging location -->
+        <deb-packaging-location>${basedir}/../Package/opt/tako/${project.name}</deb-packaging-location>
     </properties>
 
 
@@ -137,6 +141,66 @@
                     </executions>
                 </plugin>
 
+
+                <!-- These 2 plugins copy content for deb package location
+                        the resources-plugin copy module output to the package location
+                        the clean-plugin delete the copied content
+                        since they are standard maven plugin, they will attach to each module automatically
+                -->
+                <plugin>
+                    <artifactId>maven-resources-plugin</artifactId>
+                    <version>${maven-resources-plugin-version}</version>
+                    <executions>
+                        <execution>
+                            <id>copy-script-content</id>
+                            <phase>package</phase>
+                            <goals><goal>copy-resources</goal></goals>
+                            <configuration>
+                                <outputDirectory>${deb-packaging-location}/script</outputDirectory>
+                                <resources>
+                                    <resource><directory>script</directory></resource>
+                                </resources>
+                            </configuration>
+                        </execution>
+                        <execution>
+                            <id>copy-conf-content</id>
+                            <phase>package</phase>
+                            <goals><goal>copy-resources</goal></goals>
+                            <configuration>
+                                <outputDirectory>${deb-packaging-location}/conf</outputDirectory>
+                                <resources>
+                                    <resource><directory>conf</directory></resource>
+                                    <resource><directory>${basedir}/src/main/resources</directory></resource>
+                                </resources>
+                            </configuration>
+                        </execution>
+                        <execution>
+                            <id>copy-lib-content</id>
+                            <phase>package</phase>
+                            <goals><goal>copy-resources</goal></goals>
+                            <configuration>
+                                <outputDirectory>${deb-packaging-location}/lib</outputDirectory>
+                                <resources>
+                                    <resource><directory>${project.build.directory}/lib</directory></resource>
+                                    <resource>
+                                        <directory>${project.build.directory}</directory>
+                                        <includes><include>*${project.version}.jar</include></includes>
+                                    </resource>
+                                </resources>
+                            </configuration>
+                        </execution>
+                    </executions>
+                </plugin>
+
+                <plugin>
+                    <artifactId>maven-clean-plugin</artifactId>
+                    <version>${maven-resources-plugin-version}</version>
+                    <configuration>
+                        <filesets>
+                            <fileset><directory>${deb-packaging-location}</directory></fileset>
+                        </filesets>
+                    </configuration>
+                </plugin>
 
             </plugins>
         </pluginManagement>

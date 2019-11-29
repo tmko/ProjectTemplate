@@ -63,10 +63,11 @@
                 <artifactId>maven-assembly-plugin</artifactId>
             </plugin>
 
-            <!-- The following block copy dependency to Package module/ lib folder -->
+            <!-- This plugin copy dependency to Package module/ lib folder
             <plugin>
                 <artifactId>maven-dependency-plugin</artifactId>
             </plugin>
+-->
 
         </plugins>
     </build>
