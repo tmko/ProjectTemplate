@@ -24,3 +24,16 @@ cd Package/.. && dpkg-deb --build package
 
 
 ###Lesson Learnt for this project
+1. Ensure standard maven plugins are used, the advantage is to avoid setting plugin version and conflict.
+1. maven-jar-plugin compiles the jar file, add the main-class configure, and add to the target folder
+1. Plugins specification can be set in the parent pom. To pull it into the child module, add the plugin the child pom.xml
+    1. maven-assembly-plugin creates 1 jar, including all dependencies, to module/target/jar-with-dependency folder.
+    1. maven-dependency-plugin adds all dependencies jar to the target folder
+1. Cannot find a good plugin for Deb packaging.  Most the plugin is too smart and hard to do simple thing.
+1. Maven assembly is cumbersome, so maven-resources-plugin is used for copying files
+    1. Add all target/*.jar to Package/opt/tako/module/lib
+    1. Add all src/main/resources/* and module/conf to Package/opt/tako/module/conf
+    1. Add all module/script/* to Package/opt/tako/module/script
+    1. To package for different environment, copy just the corresponding files to the conf folder.
+    
+    

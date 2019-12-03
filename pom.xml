@@ -20,12 +20,8 @@
         <junit-verion>4.12</junit-verion>
 
 
-        <!-- maven plugins version -->
-        <maven-assembly-plugin-version>3.2.0</maven-assembly-plugin-version>
-        <maven-dependency-plugin-version>3.1.1</maven-dependency-plugin-version>
-        <maven-resources-plugin-version>3.1.0</maven-resources-plugin-version>
 
-        <!-- maven plugins version for other modules-->
+        <!-- reporting version for mvn site configuration-->
         <dependency-check-maven-version>5.2.2</dependency-check-maven-version>
         <maven-project-info-reports-plugin-version>2.9</maven-project-info-reports-plugin-version>
         <maven-surefire-report-version>2.22.1</maven-surefire-report-version>
@@ -100,9 +96,9 @@
                 <!-- The jar package with all dependency -->
                 <plugin>
                     <artifactId>maven-assembly-plugin</artifactId>
-                    <version>${maven-assembly-plugin-version}</version>
                     <configuration>
                         <descriptorRefs><descriptorRef>jar-with-dependencies</descriptorRef></descriptorRefs>
+                        <outputDirectory>${project.build.directory}/jar-with-dependency</outputDirectory>
                     </configuration>
                     <executions>
                         <execution>
@@ -118,13 +114,12 @@
                      how-to-copy-dependencies-jars-without-test-jars-to-a-directory-using-maven         -->
                 <plugin>
                     <artifactId>maven-dependency-plugin</artifactId>
-                    <version>${maven-dependency-plugin-version}</version>
                     <executions>
                         <execution>
                             <phase>prepare-package</phase>
                             <goals><goal>copy-dependencies</goal></goals>
                             <configuration>
-                                <outputDirectory>${project.build.directory}/lib</outputDirectory>
+                                <outputDirectory>${project.build.directory}</outputDirectory>
                                 <includeScope>runtime</includeScope>
                             </configuration>
                         </execution>
@@ -139,7 +134,6 @@
                 -->
                 <plugin>
                     <artifactId>maven-resources-plugin</artifactId>
-                    <version>${maven-resources-plugin-version}</version>
                     <executions>
                         <execution>
                             <id>copy-script-content</id>
@@ -171,10 +165,9 @@
                             <configuration>
                                 <outputDirectory>${deb-packaging-location}/lib</outputDirectory>
                                 <resources>
-                                    <resource><directory>${project.build.directory}/lib</directory></resource>
                                     <resource>
                                         <directory>${project.build.directory}</directory>
-                                        <includes><include>*${project.version}.jar</include></includes>
+                                        <includes><include>*.jar</include></includes>
                                     </resource>
                                 </resources>
                             </configuration>
@@ -184,7 +177,6 @@
 
                 <plugin>
                     <artifactId>maven-clean-plugin</artifactId>
-                    <version>${maven-resources-plugin-version}</version>
                     <configuration>
                         <filesets>
                             <fileset><directory>${deb-packaging-location}</directory></fileset>
