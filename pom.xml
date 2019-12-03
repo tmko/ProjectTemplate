@@ -2,6 +2,88 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+    <modules>
+        <module>Implementation</module>
+        <module>Package</module>
+    </modules>
+
+    <properties>
+        <!-- centralize project release version, the tag name is predefined by mvn, don't change it -->
+        <revision>1.0.0-SNAPSHOT</revision>
+
+        <!-- common dependency version -->
+        <snakeyaml-version>1.16</snakeyaml-version>
+        <lombok-version>1.18.4</lombok-version>
+        <slf4j-api-version>1.7.25</slf4j-api-version>
+        <logback-version>1.2.3</logback-version>
+        <junit-verion>4.12</junit-verion>
+
+
+        <!-- maven plugins version -->
+        <maven-assembly-plugin-version>3.2.0</maven-assembly-plugin-version>
+        <maven-dependency-plugin-version>3.1.1</maven-dependency-plugin-version>
+        <maven-resources-plugin-version>3.1.0</maven-resources-plugin-version>
+
+        <!-- maven plugins version for other modules-->
+        <dependency-check-maven-version>5.2.2</dependency-check-maven-version>
+        <maven-project-info-reports-plugin-version>2.9</maven-project-info-reports-plugin-version>
+        <maven-surefire-report-version>2.22.1</maven-surefire-report-version>
+
+        <!-- deb package location -->
+        <deb-packaging-location>${basedir}/../Package/opt/tako/${project.name}</deb-packaging-location>
+
+        <!-- global setting -->
+        <maven.compiler.source>1.8</maven.compiler.source>
+        <maven.compiler.target>1.8</maven.compiler.target>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    </properties>
+
+    <!-- factor out common dependencies, centralize version control -->
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.yaml</groupId>
+                <artifactId>snakeyaml</artifactId>
+                <version>${snakeyaml-version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.projectlombok</groupId>
+                <artifactId>lombok</artifactId>
+                <version>${lombok-version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.slf4j</groupId>
+                <artifactId>slf4j-api</artifactId>
+                <version>${slf4j-api-version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>ch.qos.logback</groupId>
+                <artifactId>logback-classic</artifactId>
+                <version>${logback-version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>ch.qos.logback</groupId>
+                <artifactId>logback-core</artifactId>
+                <version>${logback-version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>junit</groupId>
+                <artifactId>junit</artifactId>
+                <version>${junit-verion}</version>
+                <scope>test</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
+
+    <!--======================================= Modification is unlikely =========================================-->
+
     <!-- Maven 3.6+ -->
 
     <modelVersion>4.0.0</modelVersion>
@@ -11,105 +93,16 @@
     <packaging>pom</packaging>
     <version>${revision}</version>
 
-    <modules>
-        <module>Implementation</module>
-        <module>Package</module>
-    </modules>
-
-    <properties>
-        <!-- module revision should match release. -->
-        <!-- Don't change this tag name -->
-        <revision>1.0.0-SNAPSHOT</revision>
-
-        <!-- global setting -->
-        <maven.compiler.source>1.8</maven.compiler.source>
-        <maven.compiler.target>1.8</maven.compiler.target>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-
-
-        <!-- maven plugins version -->
-        <dependency-check-maven-version>5.2.2</dependency-check-maven-version>
-        <maven-project-info-reports-plugin-version>2.9</maven-project-info-reports-plugin-version>
-
-        <maven-surefire-report-version>2.22.1</maven-surefire-report-version>
-        <maven-jar-plugin-version>3.1.2</maven-jar-plugin-version>
-        <maven-assembly-plugin-version>3.2.0</maven-assembly-plugin-version>
-        <maven-dependency-plugin-version>3.1.1</maven-dependency-plugin-version>
-        <maven-resources-plugin-version>3.0.2</maven-resources-plugin-version>
-        <maven-resources-plugin-version>3.1.0</maven-resources-plugin-version>
-
-        <!-- common dependency version -->
-        <snakeyaml-version>1.16</snakeyaml-version>
-        <lombok-version>1.18.4</lombok-version>
-        <slf4j-api-version>1.7.25</slf4j-api-version>
-        <logback-version>1.2.3</logback-version>
-        <junit-verion>4.12</junit-verion>
-
-        <!-- packaging location -->
-        <deb-packaging-location>${basedir}/../Package/opt/tako/${project.name}</deb-packaging-location>
-    </properties>
-
-
-    <dependencyManagement>
-    <dependencies>
-        <dependency>
-            <groupId>org.yaml</groupId>
-            <artifactId>snakeyaml</artifactId>
-            <version>${snakeyaml-version}</version>
-        </dependency>
-
-        <dependency>
-            <groupId>org.projectlombok</groupId>
-            <artifactId>lombok</artifactId>
-            <version>${lombok-version}</version>
-        </dependency>
-
-        <dependency>
-            <groupId>org.slf4j</groupId>
-            <artifactId>slf4j-api</artifactId>
-            <version>${slf4j-api-version}</version>
-        </dependency>
-
-        <dependency>
-            <groupId>ch.qos.logback</groupId>
-            <artifactId>logback-classic</artifactId>
-            <version>${logback-version}</version>
-        </dependency>
-
-        <dependency>
-            <groupId>ch.qos.logback</groupId>
-            <artifactId>logback-core</artifactId>
-            <version>${logback-version}</version>
-        </dependency>
-
-        <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-            <version>${junit-verion}</version>
-            <scope>test</scope>
-        </dependency>
-    </dependencies>
-    </dependencyManagement>
-
-
     <build>
         <pluginManagement>
             <plugins>
-
-                <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-jar-plugin</artifactId>
-                    <version>${maven-jar-plugin-version}</version>
-                </plugin>
 
                 <!-- The jar package with all dependency -->
                 <plugin>
                     <artifactId>maven-assembly-plugin</artifactId>
                     <version>${maven-assembly-plugin-version}</version>
                     <configuration>
-                        <descriptorRefs>
-                            <descriptorRef>jar-with-dependencies</descriptorRef>
-                        </descriptorRefs>
+                        <descriptorRefs><descriptorRef>jar-with-dependencies</descriptorRef></descriptorRefs>
                     </configuration>
                     <executions>
                         <execution>
@@ -120,19 +113,16 @@
                     </executions>
                 </plugin>
 
-                <!-- This plugin creates libraries and copy dependencies to Package module/ lib folder -->
+                <!-- This plugin creates libraries and copy dependencies to Package module/ lib folder  -->
                 <!-- https://stackoverflow.com/questions/8310539/
-                     how-to-copy-dependencies-jars-without-test-jars-to-a-directory-using-maven
-                -->
+                     how-to-copy-dependencies-jars-without-test-jars-to-a-directory-using-maven         -->
                 <plugin>
                     <artifactId>maven-dependency-plugin</artifactId>
                     <version>${maven-dependency-plugin-version}</version>
                     <executions>
                         <execution>
                             <phase>prepare-package</phase>
-                            <goals>
-                                <goal>copy-dependencies</goal>
-                            </goals>
+                            <goals><goal>copy-dependencies</goal></goals>
                             <configuration>
                                 <outputDirectory>${project.build.directory}/lib</outputDirectory>
                                 <includeScope>runtime</includeScope>
@@ -206,4 +196,35 @@
         </pluginManagement>
     </build>
 
+
+
+    <!-- This generate module report, type: mvn site -->
+    <!-- Each module has its own site independently.  In other word, the reporting setting apply to each module -->
+    <reporting>
+        <plugins>
+            <!-- OWASP dependency security check -->
+            <!-- report is found in target/dependency-check-report.html -->
+            <!-- https://jeremylong.github.io/DependencyCheck/dependency-check-maven/ -->
+            <plugin>
+                <groupId>org.owasp</groupId>
+                <artifactId>dependency-check-maven</artifactId>
+                <version>${dependency-check-maven-version}</version>
+                <reportSets><reportSet><reports><report>aggregate</report></reports></reportSet></reportSets>
+            </plugin>
+
+            <!-- this insert module info to the site above -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-project-info-reports-plugin</artifactId>
+                <version>${maven-project-info-reports-plugin-version}</version>
+            </plugin>
+
+            <!-- this insert testing info to the site above -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-report-plugin</artifactId>
+                <version>${maven-surefire-report-version}</version>
+            </plugin>
+        </plugins>
+    </reporting>
 </project>

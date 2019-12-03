@@ -2,14 +2,14 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-    <parent>
-        <artifactId>Simple-Project-Template</artifactId>
-        <groupId>tako.research</groupId>
-        <version>${revision}</version>
-    </parent>
-    <modelVersion>4.0.0</modelVersion>
+
+
 
     <artifactId>Implementation</artifactId>
+
+    <properties>
+        <main-class>tako.kitchen.entrant.MainClass</main-class>
+    </properties>
 
     <dependencies>
         <dependency>
@@ -43,6 +43,18 @@
         </dependency>
     </dependencies>
 
+
+
+
+    <!--===================================== Modification unlikely needed =====================================-->
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <artifactId>Simple-Project-Template</artifactId>
+        <groupId>tako.research</groupId>
+        <version>${revision}</version>
+    </parent>
+
+    <!-- this generate executable jar -->
     <build>
         <plugins>
             <plugin>
@@ -52,54 +64,26 @@
                     <archive>
                         <manifest>
                             <addClasspath>true</addClasspath>
-                            <mainClass>tako.kitchen.entrant.MainClass</mainClass>
+                            <mainClass>${main-class}</mainClass>
                         </manifest>
                     </archive>
                 </configuration>
             </plugin>
 
-            <!-- The jar package with all dependency -->
+            <!-- The jar with all dependencies -->
             <plugin>
                 <artifactId>maven-assembly-plugin</artifactId>
             </plugin>
 
-            <!-- This plugin copy dependency to Package module/ lib folder
+            <!-- This plugin copy dependency to Package module/ lib folder -->
             <plugin>
                 <artifactId>maven-dependency-plugin</artifactId>
             </plugin>
--->
 
         </plugins>
     </build>
 
-    <!-- this block is for mvn site -->
-    <reporting>
-        <plugins>
-            <!-- This performance OWASP dependency security check -->
-            <!-- report is found in target/dependency-check-report.html -->
-            <!-- https://jeremylong.github.io/DependencyCheck/dependency-check-maven/ -->
-            <plugin>
-                <groupId>org.owasp</groupId>
-                <artifactId>dependency-check-maven</artifactId>
-                <version>${dependency-check-maven-version}</version>
-                <reportSets><reportSet><reports><report>aggregate</report></reports></reportSet></reportSets>
-            </plugin>
 
 
-            <!-- this insert module info to the site above -->
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-project-info-reports-plugin</artifactId>
-                <version>${maven-project-info-reports-plugin-version}</version>
-            </plugin>
 
-            <!-- this insert testing info to the site above -->
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-surefire-report-plugin</artifactId>
-                <version>${maven-surefire-report-version}</version>
-            </plugin>
-
-        </plugins>
-    </reporting>
 </project>
