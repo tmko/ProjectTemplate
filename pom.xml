@@ -27,7 +27,7 @@
         <maven-surefire-report-version>2.22.1</maven-surefire-report-version>
 
         <!-- deb package location -->
-        <deb-packaging-location>${basedir}/../Package/opt/tako/${project.name}</deb-packaging-location>
+        <deb-packaging-location>${basedir}/../Package/DebianPackageArchive/opt/tako/${project.name}</deb-packaging-location>
 
         <!-- global setting -->
         <maven.compiler.source>1.8</maven.compiler.source>
@@ -180,6 +180,7 @@
                     <configuration>
                         <filesets>
                             <fileset><directory>${deb-packaging-location}</directory></fileset>
+                            <fileset><directory>**/*.deb</directory></fileset>
                         </filesets>
                     </configuration>
                 </plugin>

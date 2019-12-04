@@ -26,8 +26,13 @@
                         <phase>package</phase>
                         <goals><goal>exec</goal></goals>
                         <configuration>
-                            <workingDirectory>${basedir}/..</workingDirectory>
-                            <executable>dpkg-deb --build Package</executable>
+                            <workingDirectory>${basedir}</workingDirectory>
+                            <executable>dpkg-deb</executable>
+                            <arguments>
+                                <argument>--build</argument>
+                                <argument>DebianPackageArchive</argument>
+                                <argument>${project.build.finalName}.deb</argument>
+                            </arguments>
                         </configuration>
                     </execution>
                 </executions>
