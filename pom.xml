@@ -180,7 +180,7 @@
                     <configuration>
                         <filesets>
                             <fileset><directory>${deb-packaging-location}</directory></fileset>
-                            <fileset><directory>**/*.deb</directory></fileset>
+                            <fileset><directory>${basedir}</directory><includes><include>**/*.deb</include></includes></fileset>
                         </filesets>
                     </configuration>
                 </plugin>
