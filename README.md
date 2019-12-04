@@ -1,5 +1,6 @@
 # ProjectTemplate
 This repository creates structure for multi-modules project with *.deb deployment project.
+The machine needs dpkg-deb installed.
 
 #### Multiple Modules
 Standard Maven module is used with 2 additional directories, conf and script. To create module:  
