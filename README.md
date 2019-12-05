@@ -9,7 +9,7 @@ Standard Maven module is used with 2 additional directories, conf and script. To
 3. Add a new module in the parent pom.xml   
 
 ######conf directory
-Content in the conf and src/main/resource will be added  to the /opt/tako/artifactId/conf directory during deployment.  
+Content in the conf and src/main/resource will be added  to the /opt/project-module/conf directory during deployment.  
 This is the best place for log4j properties and application configuration.  
 
 ######script directory
@@ -34,9 +34,9 @@ remove: sudo apt remove {the Package value in the DEBIAN/control file}
     1. maven-dependency-plugin adds all dependencies jar to the target folder
 1. Cannot find a good plugin for Deb packaging.  Most the plugin is too smart and hard to do simple thing.
 1. Maven assembly is cumbersome, so maven-resources-plugin is used for copying files
-    1. Add all target/*.jar to Package/opt/tako/module/lib
-    1. Add all src/main/resources/* and module/conf to Package/opt/tako/module/conf
-    1. Add all module/script/* to Package/opt/tako/module/script
+    1. Add all target/*.jar to Package/opt/project-module/lib
+    1. Add all src/main/resources/* and module/conf to Package/opt/project-module/conf
+    1. Add all module/script/* to Package/opt/module/script
     1. To package for different environment, likely each env. needs separate set of configuration. to do so:
         1. create sub-folder for each env. inside the conf folder
         1. move the configuration to the sub-folder
