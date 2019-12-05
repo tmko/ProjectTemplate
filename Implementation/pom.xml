@@ -49,7 +49,7 @@
     <!--===================================== Modification unlikely needed =====================================-->
     <modelVersion>4.0.0</modelVersion>
     <parent>
-        <artifactId>Simple-Project-Template</artifactId>
+        <artifactId>ProjectTemplate</artifactId>
         <groupId>tako.research</groupId>
         <version>${revision}</version>
     </parent>
@@ -76,7 +76,7 @@
                     <archive>
                         <manifest>
                             <mainClass>${main-class}</mainClass>
-                        </manifest>
+                        </manifest>Panties Part 001
                     </archive>
                 </configuration>
             </plugin>
@@ -87,6 +87,18 @@
             </plugin>
 
         </plugins>
+
+        <!-- don't put logback.xml into the jar file, use filtering to replace mvn property inside the xml -->
+        <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+                <targetPath>${project.build.directory}</targetPath>
+                <filtering>true</filtering>
+                <includes>
+                    <include>logback.xml</include>
+                </includes>
+            </resource>
+        </resources>
     </build>
 
 

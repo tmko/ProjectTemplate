@@ -19,7 +19,9 @@ This is the best place for cron script or execution script.
 #### Create deb Package
 Reference:  
 https://www.tldp.org/HOWTO/html_single/Debian-Binary-Package-Building-HOWTO/  
-cd Package/.. && dpkg-deb --build package
+Create deb: cd Package && dpkg-deb --build {directory with control} {deb name}  
+Installation:  sudo atp install ./{deb name}.deb
+remove: sudo apt remove {the Package value in the DEBIAN/control file}
 
 
 
@@ -35,6 +37,9 @@ cd Package/.. && dpkg-deb --build package
     1. Add all target/*.jar to Package/opt/tako/module/lib
     1. Add all src/main/resources/* and module/conf to Package/opt/tako/module/conf
     1. Add all module/script/* to Package/opt/tako/module/script
-    1. To package for different environment, copy just the corresponding files to the conf folder.
+    1. To package for different environment, likely each env. needs separate set of configuration. to do so:
+        1. create sub-folder for each env. inside the conf folder
+        1. move the configuration to the sub-folder
+        1. In "copy-conf-content" block, edit the the resource value to point to the sub-folder.
     
     

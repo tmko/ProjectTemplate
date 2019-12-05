@@ -27,7 +27,8 @@
         <maven-surefire-report-version>2.22.1</maven-surefire-report-version>
 
         <!-- deb package location -->
-        <deb-packaging-location>${basedir}/../Package/DebianPackageArchive/opt/tako/${project.name}</deb-packaging-location>
+        <deb-packaging-opt>${basedir}/../Package/DebianPackageArchive/opt/${project.parent.artifactId}-${project.artifactId}</deb-packaging-opt>
+        <deb-packaging-log>${basedir}/../Package/DebianPackageArchive/var/log/${project.parent.artifactId}-${project.artifactId}</deb-packaging-log>
 
         <!-- global setting -->
         <maven.compiler.source>1.8</maven.compiler.source>
@@ -85,7 +86,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>tako.research</groupId>
-    <artifactId>Simple-Project-Template</artifactId>
+    <artifactId>ProjectTemplate</artifactId>
     <packaging>pom</packaging>
     <version>${revision}</version>
 
@@ -140,7 +141,8 @@
                             <phase>package</phase>
                             <goals><goal>copy-resources</goal></goals>
                             <configuration>
-                                <outputDirectory>${deb-packaging-location}/script</outputDirectory>
+                                <includeEmptyDirs>true</includeEmptyDirs>
+                                <outputDirectory>${deb-packaging-opt}/script</outputDirectory>
                                 <resources>
                                     <resource><directory>script</directory></resource>
                                 </resources>
@@ -151,7 +153,7 @@
                             <phase>package</phase>
                             <goals><goal>copy-resources</goal></goals>
                             <configuration>
-                                <outputDirectory>${deb-packaging-location}/conf</outputDirectory>
+                                <outputDirectory>${deb-packaging-opt}/conf</outputDirectory>
                                 <resources>
                                     <resource><directory>conf</directory></resource>
                                     <resource><directory>${basedir}/src/main/resources</directory></resource>
@@ -163,11 +165,25 @@
                             <phase>package</phase>
                             <goals><goal>copy-resources</goal></goals>
                             <configuration>
-                                <outputDirectory>${deb-packaging-location}/lib</outputDirectory>
+                                <outputDirectory>${deb-packaging-opt}/lib</outputDirectory>
                                 <resources>
                                     <resource>
                                         <directory>${project.build.directory}</directory>
                                         <includes><include>*.jar</include></includes>
+                                    </resource>
+                                </resources>
+                            </configuration>
+                        </execution>
+                        <execution>
+                            <id>create-log-content</id>
+                            <phase>package</phase>
+                            <goals><goal>copy-resources</goal></goals>
+                            <configuration>
+                                <outputDirectory>${deb-packaging-log}</outputDirectory>
+                                <resources>
+                                    <resource>
+                                        <directory>${project.build.directory}</directory>
+                                        <includes><include>*.log</include></includes>
                                     </resource>
                                 </resources>
                             </configuration>
@@ -179,7 +195,8 @@
                     <artifactId>maven-clean-plugin</artifactId>
                     <configuration>
                         <filesets>
-                            <fileset><directory>${deb-packaging-location}</directory></fileset>
+                            <fileset><directory>${deb-packaging-opt}</directory></fileset>
+                            <fileset><directory>${deb-packaging-log}</directory></fileset>
                             <fileset><directory>${basedir}</directory><includes><include>**/*.deb</include></includes></fileset>
                         </filesets>
                     </configuration>
