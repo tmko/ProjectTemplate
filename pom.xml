@@ -203,7 +203,10 @@
                         <filesets>
                             <fileset><directory>${deb-packaging-opt}</directory></fileset>
                             <fileset><directory>${deb-packaging-log}</directory></fileset>
-                            <fileset><directory>${basedir}</directory><includes><include>**/*.deb</include></includes></fileset>
+                            <fileset>
+                                <directory>${basedir}</directory>
+                                <includes><include>**/*.deb</include><include>**/control</include></includes>
+                            </fileset>
                         </filesets>
                     </configuration>
                 </plugin>

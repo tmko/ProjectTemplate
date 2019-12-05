@@ -21,8 +21,25 @@
                 <version>1.6.0</version>
                 <groupId>org.codehaus.mojo</groupId>
                 <executions>
-                    <execution><!-- Run our version calculation script -->
-                        <id>Renaming build artifacts</id>
+
+                    <execution>
+                        <id>Insert Package value</id>
+                        <phase>package</phase>
+                        <goals><goal>exec</goal></goals>
+                        <configuration>
+                            <workingDirectory>${basedir}/src</workingDirectory>
+                            <executable>sed</executable>
+                            <arguments>
+                                <argument>1iPackage: ${project.parent.artifactId}\nVersion: ${project.parent.version}</argument>
+                                <argument>control-src</argument>
+                            </arguments>
+                            <outputFile>${basedir}/DebianPackageArchive/DEBIAN/control</outputFile>
+                        </configuration>
+                    </execution>
+
+
+                    <execution>
+                        <id>Run dpkg-deb for Debian package</id>
                         <phase>package</phase>
                         <goals><goal>exec</goal></goals>
                         <configuration>
@@ -35,9 +52,12 @@
                             </arguments>
                         </configuration>
                     </execution>
+
                 </executions>
             </plugin>
+
         </plugins>
+
     </build>
 
 </project>
