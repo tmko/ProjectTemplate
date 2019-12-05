@@ -26,7 +26,7 @@
 
     <logger level="DEBUG" name="tako.kitchen" additivity="${STOP_BUBBLING_LOG}">
         <appender-ref ref="STDOUT" />
-        <!--<appender-ref ref="FILE" />-->
+        <appender-ref ref="FILE"   />
     </logger>
 
 
