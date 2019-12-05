@@ -153,10 +153,14 @@
                             <phase>package</phase>
                             <goals><goal>copy-resources</goal></goals>
                             <configuration>
+                                <includeEmptyDirs>true</includeEmptyDirs>
                                 <outputDirectory>${deb-packaging-opt}/conf</outputDirectory>
                                 <resources>
                                     <resource><directory>conf</directory></resource>
-                                    <resource><directory>${basedir}/src/main/resources</directory></resource>
+                                    <resource>
+                                        <directory>${project.build.outputDirectory}</directory>
+                                        <includes><include>*.*</include></includes>
+                                    </resource>
                                 </resources>
                             </configuration>
                         </execution>
@@ -165,6 +169,7 @@
                             <phase>package</phase>
                             <goals><goal>copy-resources</goal></goals>
                             <configuration>
+                                <includeEmptyDirs>true</includeEmptyDirs>
                                 <outputDirectory>${deb-packaging-opt}/lib</outputDirectory>
                                 <resources>
                                     <resource>
@@ -179,6 +184,7 @@
                             <phase>package</phase>
                             <goals><goal>copy-resources</goal></goals>
                             <configuration>
+                                <includeEmptyDirs>true</includeEmptyDirs>
                                 <outputDirectory>${deb-packaging-log}</outputDirectory>
                                 <resources>
                                     <resource>
