@@ -205,7 +205,7 @@
                             <fileset><directory>${deb-packaging-log}</directory></fileset>
                             <fileset>
                                 <directory>${basedir}</directory>
-                                <includes><include>**/*.deb</include><include>**/control</include></includes>
+                                <includes><include>**/*.deb</include><include>**/DEBIAN/*</include></includes>
                             </fileset>
                         </filesets>
                     </configuration>

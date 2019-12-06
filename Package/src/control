@@ -1,3 +1,5 @@
+Package: ${project.parent.name}
+Version: ${project.parent.version}
 Section: base
 Priority: optional
 Architecture: all
