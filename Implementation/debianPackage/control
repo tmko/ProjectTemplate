@@ -1,0 +1,7 @@
+Package: ${project.artifactId}
+Version: ${project.version}
+Section: base
+Priority: optional
+Architecture: all
+Maintainer: Tako <tako@no-email.io>
+Description: No Description

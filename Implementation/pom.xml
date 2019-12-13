@@ -3,43 +3,66 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>tako.research</groupId>
+    <version>${revision}</version>
 
 
     <artifactId>Implementation</artifactId>
 
     <properties>
         <main-class>tako.kitchen.entrant.MainClass</main-class>
+
+        <revision>1.0.0-SNAPSHOT</revision>
+
+        <!-- common dependency version -->
+        <snakeyaml-version>1.16</snakeyaml-version>
+        <lombok-version>1.18.4</lombok-version>
+        <slf4j-api-version>1.7.25</slf4j-api-version>
+        <logback-version>1.2.3</logback-version>
+        <junit-verion>4.12</junit-verion>
+
+        <maven.compiler.source>1.8</maven.compiler.source>
+        <maven.compiler.target>1.8</maven.compiler.target>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
     <dependencies>
         <dependency>
             <groupId>org.yaml</groupId>
             <artifactId>snakeyaml</artifactId>
+            <version>${snakeyaml-version}</version>
         </dependency>
 
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
+            <version>${lombok-version}</version>
         </dependency>
 
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-api</artifactId>
+            <version>${slf4j-api-version}</version>
         </dependency>
 
         <dependency>
             <groupId>ch.qos.logback</groupId>
             <artifactId>logback-classic</artifactId>
+            <version>${logback-version}</version>
         </dependency>
 
         <dependency>
             <groupId>ch.qos.logback</groupId>
             <artifactId>logback-core</artifactId>
+            <version>${logback-version}</version>
         </dependency>
 
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
+            <version>${junit-verion}</version>
+            <scope>test</scope>
         </dependency>
     </dependencies>
 
@@ -47,16 +70,12 @@
 
 
     <!--===================================== Modification unlikely needed =====================================-->
-    <modelVersion>4.0.0</modelVersion>
-    <parent>
-        <artifactId>ProjectTemplate</artifactId>
-        <groupId>tako.research</groupId>
-        <version>${revision}</version>
-    </parent>
 
     <!-- this generate executable jar -->
     <build>
         <plugins>
+
+
             <plugin>
                 <artifactId>maven-jar-plugin</artifactId>
                 <configuration>
@@ -71,30 +90,59 @@
 
             <!-- The jar with all dependencies -->
             <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-assembly-plugin</artifactId>
                 <configuration>
+                    <descriptorRefs>
+                        <descriptorRef>jar-with-dependencies</descriptorRef>
+                    </descriptorRefs>
+
                     <archive>
                         <manifest>
                             <mainClass>${main-class}</mainClass>
-                        </manifest>Panties Part 001
+                        </manifest>
                     </archive>
+
+                    <descriptors>
+                        <descriptor>../assembly.xml</descriptor>
+                    </descriptors>
                 </configuration>
+                <executions>
+                    <execution>
+                        <id>trigger-assembly</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>single</goal>
+                        </goals>
+                    </execution>
+                </executions>
             </plugin>
 
-            <!-- This plugin copy dependency to Package module/ lib folder -->
             <plugin>
-                <artifactId>maven-dependency-plugin</artifactId>
+                <artifactId>exec-maven-plugin</artifactId>
+                <version>1.6.0</version>
+                <groupId>org.codehaus.mojo</groupId>
+                <executions>
+
+                    <execution>
+                        <id>Run dpkg-deb for Debian package</id>
+                        <phase>package</phase>
+                        <goals><goal>exec</goal></goals>
+                        <configuration>
+                            <workingDirectory>${project.build.directory}/${project.build.finalName}-deb</workingDirectory>
+                            <executable>dpkg-deb</executable>
+                            <arguments>
+                                <argument>--build</argument>
+                                <argument>DebianPackageArchive</argument>
+                                <argument>${project.build.finalName}.deb</argument>
+                            </arguments>
+                        </configuration>
+                    </execution>
+
+                </executions>
             </plugin>
 
         </plugins>
-
-        <!-- use filtering to replace mvn property inside files found in resources -->
-        <resources>
-            <resource>
-                <directory>src/main/resources</directory>
-                <filtering>true</filtering>
-            </resource>
-        </resources>
     </build>
 
 

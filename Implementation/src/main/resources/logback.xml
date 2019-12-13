@@ -1,24 +1,8 @@
 <configuration>
 
-
-    <property name="LOG_FILE" value="LogFile.log" />
-    <property name="LOG_DIR" value="/var/log/${project.parent.artifactId}-${project.artifactId}" />-
-
-
-
     <property name="LOG_FORMAT" value="%d{HH:mm:ss.SSS} [%method] [%thread] %-5level %logger{36} - %msg%n" />
     <property name="STOP_BUBBLING_LOG" value="false" />
 
-
-
-    <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
-        <encoder><pattern>${LOG_FORMAT}</pattern></encoder>
-        <file>${LOG_DIR}/${LOG_FILE}</file>
-        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-            <fileNamePattern>${LOG_DIR}/%d{yyyy-MM-dd}-${LOG_FILE}</fileNamePattern>
-            <maxHistory>30</maxHistory>
-        </rollingPolicy>
-    </appender>
 
     <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
         <encoder><pattern>${LOG_FORMAT}</pattern></encoder>
@@ -26,7 +10,6 @@
 
     <logger level="DEBUG" name="tako.kitchen" additivity="${STOP_BUBBLING_LOG}">
         <appender-ref ref="STDOUT" />
-        <appender-ref ref="FILE"   />
     </logger>
 
 

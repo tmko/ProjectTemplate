@@ -1,0 +1,50 @@
+<assembly xmlns="http://maven.apache.org/ASSEMBLY/2.0.0"
+          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          xsi:schemaLocation="http://maven.apache.org/ASSEMBLY/2.0.0 http://maven.apache.org/xsd/assembly-2.0.0.xsd">
+
+    <id>deb</id>
+    <baseDirectory>DebianPackageArchive</baseDirectory>
+
+    <formats><format>dir</format></formats>
+
+    <dependencySets>
+        <dependencySet>
+            <outputDirectory>opt/${project.groupId}..${project.artifactId}/lib</outputDirectory>
+            <unpack>false</unpack>
+            <scope>runtime</scope>
+            <directoryMode>555</directoryMode>
+            <fileMode>644</fileMode>
+        </dependencySet>
+    </dependencySets>
+
+    <fileSets>
+        <fileSet>
+            <directory>debianPackage</directory>
+            <outputDirectory>var/log/${project.groupId}..${project.artifactId}</outputDirectory>
+            <directoryMode>333</directoryMode>
+            <excludes><exclude>**/*</exclude></excludes>
+        </fileSet>
+
+        <fileSet>
+            <directory>debianPackage/script</directory>
+            <outputDirectory>opt/${project.groupId}..${project.artifactId}/scripts</outputDirectory>
+            <fileMode>755</fileMode>
+            <filtered>true</filtered>
+        </fileSet>
+
+        <fileSet>
+            <directory>debianPackage/conf</directory>
+            <outputDirectory>opt/${project.groupId}..${project.artifactId}/conf</outputDirectory>
+            <fileMode>555</fileMode>
+            <filtered>true</filtered>
+        </fileSet>
+
+        <fileSet>
+            <directory>debianPackage</directory>
+            <outputDirectory>DEBIAN</outputDirectory>
+            <includes><include>control</include><include>postinst</include><include>prerm</include></includes>
+            <fileMode>555</fileMode>
+            <filtered>true</filtered>
+        </fileSet>
+   </fileSets>
+</assembly>

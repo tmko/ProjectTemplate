@@ -1,1 +1,0 @@
-java -Dlogback.configurationFile=../conf/logback.xml -jar ../lib/Implementation-1.0.0-SNAPSHOT.jar

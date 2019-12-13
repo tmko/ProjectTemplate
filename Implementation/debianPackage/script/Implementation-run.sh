@@ -1,0 +1,1 @@
+java -Dlogback.configurationFile=../conf/logback.xml -jar ../lib/${project.build.finalName}.jar
