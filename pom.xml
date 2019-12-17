@@ -4,13 +4,13 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 
     <modules>
-        <module>Implementation</module>
-        <module>Package</module>
+        <module>ModuleOne</module>
     </modules>
 
     <properties>
         <!-- centralize project release version, the tag name is predefined by mvn, don't change it -->
         <revision>1.0.0-SNAPSHOT</revision>
+
 
         <!-- common dependency version -->
         <snakeyaml-version>1.16</snakeyaml-version>
@@ -20,20 +20,18 @@
         <junit-verion>4.12</junit-verion>
 
 
-
         <!-- reporting version for mvn site configuration-->
         <dependency-check-maven-version>5.2.2</dependency-check-maven-version>
         <maven-project-info-reports-plugin-version>2.9</maven-project-info-reports-plugin-version>
         <maven-surefire-report-version>2.22.1</maven-surefire-report-version>
 
-        <!-- deb package location -->
-        <deb-packaging-opt>${basedir}/../Package/DebianPackageArchive/opt/${project.parent.artifactId}-${project.artifactId}</deb-packaging-opt>
-        <deb-packaging-log>${basedir}/../Package/DebianPackageArchive/var/log/${project.parent.artifactId}-${project.artifactId}</deb-packaging-log>
 
         <!-- global setting -->
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+
+        <main-class>main-class-not-set-in-module</main-class>
     </properties>
 
     <!-- factor out common dependencies, centralize version control -->
@@ -94,122 +92,69 @@
         <pluginManagement>
             <plugins>
 
-                <!-- The jar package with all dependency
+                <!-- create the simple jar without dependency -->
                 <plugin>
+                    <artifactId>maven-jar-plugin</artifactId>
+                    <configuration>
+                        <archive>
+                            <manifest>
+                                <addClasspath>true</addClasspath>
+                                <mainClass>${main-class}</mainClass>
+                            </manifest>
+                        </archive>
+                    </configuration>
+                </plugin>
+
+                <!-- Create a deb installation structure -->
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-assembly-plugin</artifactId>
                     <configuration>
-                        <descriptorRefs><descriptorRef>jar-with-dependencies</descriptorRef></descriptorRefs>
-                        <outputDirectory>${project.build.directory}/jar-with-dependency</outputDirectory>
+                        <descriptorRefs>
+                            <descriptorRef>jar-with-dependencies</descriptorRef>
+                        </descriptorRefs>
+
+                        <archive>
+                            <manifest>
+                                <mainClass>${main-class}</mainClass>
+                            </manifest>
+                        </archive>
+
+                        <descriptors>
+                            <descriptor>../assembly.xml</descriptor>
+                        </descriptors>
                     </configuration>
+
                     <executions>
                         <execution>
-                            <id>make-assembly</id>
+                            <id>trigger-assembly</id>
                             <phase>package</phase>
                             <goals><goal>single</goal></goals>
                         </execution>
                     </executions>
                 </plugin>
--->
 
-                <!-- This plugin creates libraries and copy dependencies to Package module/ lib folder  -->
-                <!-- https://stackoverflow.com/questions/8310539/
-                     how-to-copy-dependencies-jars-without-test-jars-to-a-directory-using-maven         -->
+                <!-- create the deb package -->
                 <plugin>
-                    <artifactId>maven-dependency-plugin</artifactId>
+                    <artifactId>exec-maven-plugin</artifactId>
+                    <version>1.6.0</version>
+                    <groupId>org.codehaus.mojo</groupId>
                     <executions>
                         <execution>
-                            <phase>prepare-package</phase>
-                            <goals><goal>copy-dependencies</goal></goals>
+                            <id>Run dpkg-deb for Debian package</id>
+                            <phase>package</phase>
+                            <goals><goal>exec</goal></goals>
                             <configuration>
-                                <outputDirectory>${project.build.directory}</outputDirectory>
-                                <includeScope>runtime</includeScope>
+                                <workingDirectory>${project.build.directory}/${project.build.finalName}-deb</workingDirectory>
+                                <executable>dpkg-deb</executable>
+                                <arguments>
+                                    <argument>--build</argument>
+                                    <argument>DebianPackageArchive</argument>
+                                    <argument>../${project.build.finalName}.deb</argument>
+                                </arguments>
                             </configuration>
                         </execution>
                     </executions>
-                </plugin>
-
-
-                <!-- These 2 plugins copy content for deb package location
-                        the resources-plugin copy module output to the package location
-                        the clean-plugin delete the copied content
-                        since they are standard maven plugin, they will attach to each module automatically
-                -->
-                <plugin>
-                    <artifactId>maven-resources-plugin</artifactId>
-                    <executions>
-                        <execution>
-                            <id>copy-script-content</id>
-                            <phase>package</phase>
-                            <goals><goal>copy-resources</goal></goals>
-                            <configuration>
-                                <includeEmptyDirs>true</includeEmptyDirs>
-                                <outputDirectory>${deb-packaging-opt}/script</outputDirectory>
-                                <resources>
-                                    <resource><directory>script</directory></resource>
-                                </resources>
-                            </configuration>
-                        </execution>
-                        <execution>
-                            <id>copy-conf-content</id>
-                            <phase>package</phase>
-                            <goals><goal>copy-resources</goal></goals>
-                            <configuration>
-                                <includeEmptyDirs>true</includeEmptyDirs>
-                                <outputDirectory>${deb-packaging-opt}/conf</outputDirectory>
-                                <resources>
-                                    <resource><directory>conf</directory></resource>
-                                    <resource>
-                                        <directory>${project.build.outputDirectory}</directory>
-                                        <includes><include>*.*</include></includes>
-                                    </resource>
-                                </resources>
-                            </configuration>
-                        </execution>
-                        <execution>
-                            <id>copy-lib-content</id>
-                            <phase>package</phase>
-                            <goals><goal>copy-resources</goal></goals>
-                            <configuration>
-                                <includeEmptyDirs>true</includeEmptyDirs>
-                                <outputDirectory>${deb-packaging-opt}/lib</outputDirectory>
-                                <resources>
-                                    <resource>
-                                        <directory>${project.build.directory}</directory>
-                                        <includes><include>*.jar</include></includes>
-                                    </resource>
-                                </resources>
-                            </configuration>
-                        </execution>
-                        <execution>
-                            <id>create-log-content</id>
-                            <phase>package</phase>
-                            <goals><goal>copy-resources</goal></goals>
-                            <configuration>
-                                <includeEmptyDirs>true</includeEmptyDirs>
-                                <outputDirectory>${deb-packaging-log}</outputDirectory>
-                                <resources>
-                                    <resource>
-                                        <directory>${project.build.directory}</directory>
-                                        <includes><include>*.log</include></includes>
-                                    </resource>
-                                </resources>
-                            </configuration>
-                        </execution>
-                    </executions>
-                </plugin>
-
-                <plugin>
-                    <artifactId>maven-clean-plugin</artifactId>
-                    <configuration>
-                        <filesets>
-                            <fileset><directory>${deb-packaging-opt}</directory></fileset>
-                            <fileset><directory>${deb-packaging-log}</directory></fileset>
-                            <fileset>
-                                <directory>${basedir}</directory>
-                                <includes><include>**/*.deb</include><include>**/DEBIAN/*</include></includes>
-                            </fileset>
-                        </filesets>
-                    </configuration>
                 </plugin>
 
             </plugins>
@@ -247,4 +192,6 @@
             </plugin>
         </plugins>
     </reporting>
+
+
 </project>
