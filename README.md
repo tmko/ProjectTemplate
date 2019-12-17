@@ -1,22 +1,23 @@
 # ProjectTemplate
-This repository creates structure for multi-modules project with *.deb deployment project.
+This repository creates multi-modules maven project with *.deb deployment package.
 The machine needs dpkg-deb installed.
 
-#### Multiple Modules
-Standard Maven module is used with 2 additional directories, conf and script. To create module:  
-1. Copy the Implementation directory, gives it a new name.  
-2. Inside the new directory, the edit pom.xml file. Change the artifactId value to match the folder name.  
-3. Add a new module in the parent pom.xml   
+## Multiple Modules
+To add new Maven module:  
+1. Copy the ModuleOne directory, gives it a new name.  
+1. Inside the new directory, edit pom.xml file. Change the artifactId value to match the new folder name.  
+1. Add a new module in the parent pom.xml 
 
-######conf directory
-Content in the conf and src/main/resource will be added  to the /opt/project-module/conf directory during deployment.  
-This is the best place for log4j properties and application configuration.  
+The new module sources the plugin setting from parent pom.  The plugin ran within the child module context.
+The deb packaging folder is controlled by the assembly.xml.
 
-######script directory
-Content in the script will be added to the /opt/tako/artifactId/script directory during deployment.  
-This is the best place for cron script or execution script.  
+## debianPackage folder
+The folder contains the control files for installation. 
+Different environment may require different configuration.  Sub folder for each environment can be created within conf.
+Change assembly.xml to select environment folder for packaging. 
 
-#### Create deb Package
+
+## Create deb Package
 Reference:  
 https://www.tldp.org/HOWTO/html_single/Debian-Binary-Package-Building-HOWTO/  
 Create deb: cd Package && dpkg-deb --build {directory with control} {deb name}  
@@ -29,7 +30,7 @@ remove: sudo apt remove {the Package value in the DEBIAN/control file}
 ###Lesson Learnt for this project
 1. Ensure standard maven plugins are used, the advantage is to avoid setting plugin version and conflict.
 1. maven-jar-plugin compiles the jar file, add the main-class configure, and add to the target folder
-1. Plugins specification can be set in the parent pom. To pull it into the child module, add the plugin the child pom.xml
+1. Plugins specification can be set in the parent pom. To pull it into the child module, add the plugin to child pom.xml
     1. maven-assembly-plugin creates 1 jar, including all dependencies, to module/target/jar-with-dependency folder.
     1. maven-dependency-plugin adds all dependencies jar to the target folder
 1. Cannot find a good plugin for Deb packaging.  Most the plugin is too smart and hard to do simple thing.

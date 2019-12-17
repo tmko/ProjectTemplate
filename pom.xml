@@ -31,7 +31,7 @@
         <maven.compiler.target>1.8</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
-        <main-class>main-class-not-set-in-module</main-class>
+        <main-class>main-class-should-be-set-per-module</main-class>
     </properties>
 
     <!-- factor out common dependencies, centralize version control -->
