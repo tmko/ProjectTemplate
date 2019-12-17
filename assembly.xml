@@ -1,12 +1,14 @@
-<assembly xmlns="http://maven.apache.org/ASSEMBLY/2.0.0"
-          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<assembly xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          xmlns="http://maven.apache.org/ASSEMBLY/2.0.0"
           xsi:schemaLocation="http://maven.apache.org/ASSEMBLY/2.0.0 http://maven.apache.org/xsd/assembly-2.0.0.xsd">
 
     <id>deb</id>
     <baseDirectory>DebianPackageArchive</baseDirectory>
 
 
-    <formats><format>dir</format></formats>
+    <formats>
+        <format>dir</format>
+    </formats>
 
     <dependencySets>
         <dependencySet>
@@ -23,7 +25,9 @@
             <directory>debianPackage</directory>
             <outputDirectory>var/log/${project.groupId}..${project.artifactId}</outputDirectory>
             <directoryMode>333</directoryMode>
-            <excludes><exclude>**/*</exclude></excludes>
+            <excludes>
+                <exclude>**/*</exclude>
+            </excludes>
         </fileSet>
 
         <fileSet>
@@ -43,9 +47,13 @@
         <fileSet>
             <directory>debianPackage</directory>
             <outputDirectory>DEBIAN</outputDirectory>
-            <includes><include>control</include><include>postinst</include><include>prerm</include></includes>
+            <includes>
+                <include>control</include>
+                <include>postinst</include>
+                <include>prerm</include>
+            </includes>
             <fileMode>555</fileMode>
             <filtered>true</filtered>
         </fileSet>
-   </fileSets>
+    </fileSets>
 </assembly>

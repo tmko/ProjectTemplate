@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0"
-         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xmlns="http://maven.apache.org/POM/4.0.0"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 
     <modules>
@@ -129,7 +129,9 @@
                         <execution>
                             <id>trigger-assembly</id>
                             <phase>package</phase>
-                            <goals><goal>single</goal></goals>
+                            <goals>
+                                <goal>single</goal>
+                            </goals>
                         </execution>
                     </executions>
                 </plugin>
@@ -143,9 +145,12 @@
                         <execution>
                             <id>Run dpkg-deb for Debian package</id>
                             <phase>package</phase>
-                            <goals><goal>exec</goal></goals>
+                            <goals>
+                                <goal>exec</goal>
+                            </goals>
                             <configuration>
-                                <workingDirectory>${project.build.directory}/${project.build.finalName}-deb</workingDirectory>
+                                <workingDirectory>${project.build.directory}/${project.build.finalName}-deb
+                                </workingDirectory>
                                 <executable>dpkg-deb</executable>
                                 <arguments>
                                     <argument>--build</argument>
@@ -162,7 +167,6 @@
     </build>
 
 
-
     <!-- This generate module report, type: mvn site -->
     <!-- Each module has its own site independently.  In other word, the reporting setting apply to each module -->
     <reporting>
@@ -174,7 +178,13 @@
                 <groupId>org.owasp</groupId>
                 <artifactId>dependency-check-maven</artifactId>
                 <version>${dependency-check-maven-version}</version>
-                <reportSets><reportSet><reports><report>aggregate</report></reports></reportSet></reportSets>
+                <reportSets>
+                    <reportSet>
+                        <reports>
+                            <report>aggregate</report>
+                        </reports>
+                    </reportSet>
+                </reportSets>
             </plugin>
 
             <!-- this insert module info to the site above -->

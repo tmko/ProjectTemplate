@@ -1,16 +1,17 @@
 <configuration>
 
 
-    <property name="LOG_FILE" value="LogFile.log" />
-    <property name="LOG_DIR" value="var/log/${project.groupId}..${project.artifactId}" />
+    <property name="LOG_FILE" value="LogFile.log"/>
+    <property name="LOG_DIR" value="var/log/${project.groupId}..${project.artifactId}"/>
 
 
-
-    <property name="LOG_FORMAT" value="%d{HH:mm:ss.SSS} [%method] [%thread] %-5level %logger{36} - %msg%n" />
-    <property name="STOP_BUBBLING_LOG" value="false" />
+    <property name="LOG_FORMAT" value="%d{HH:mm:ss.SSS} [%method] [%thread] %-5level %logger{36} - %msg%n"/>
+    <property name="STOP_BUBBLING_LOG" value="false"/>
 
     <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
-        <encoder><pattern>${LOG_FORMAT}</pattern></encoder>
+        <encoder>
+            <pattern>${LOG_FORMAT}</pattern>
+        </encoder>
         <file>${LOG_DIR}/${LOG_FILE}</file>
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
             <fileNamePattern>${LOG_DIR}/%d{yyyy-MM-dd}-${LOG_FILE}</fileNamePattern>
@@ -19,18 +20,18 @@
     </appender>
 
     <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
-        <encoder><pattern>${LOG_FORMAT}</pattern></encoder>
+        <encoder>
+            <pattern>${LOG_FORMAT}</pattern>
+        </encoder>
     </appender>
 
 
-
-
     <logger level="INFO" name="tako.kitchen" additivity="${STOP_BUBBLING_LOG}">
-        <appender-ref ref="STDOUT" />
-        <appender-ref ref="FILE"   />
+        <appender-ref ref="STDOUT"/>
+        <appender-ref ref="FILE"/>
     </logger>
 
     <root level="INFO">
-        <appender-ref ref="STDOUT" />
+        <appender-ref ref="STDOUT"/>
     </root>
 </configuration>

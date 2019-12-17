@@ -16,7 +16,7 @@ import static tako.kitchen.entrant.YamlConfigurationParser.toPojo;
 
 public class YamlConfigurationParserTest {
 
-    public <T> T loadAsResource (String inputYaml, Class<T> yamlPojoClass) throws IOException {
+    public <T> T loadAsResource(String inputYaml, Class<T> yamlPojoClass) throws IOException {
         ClassLoader thisLoader = this.getClass().getClassLoader();
 
         try (InputStream yamlInput = thisLoader.getResourceAsStream(inputYaml)) {
@@ -30,7 +30,7 @@ public class YamlConfigurationParserTest {
         SampleConfigYamlPojo pojo;
 
         /* When */
-        pojo = loadAsResource("sample.yaml", SampleConfigYamlPojo.class) ;
+        pojo = loadAsResource("sample.yaml", SampleConfigYamlPojo.class);
 
         /* Verify */
         Assert.assertThat(pojo, is(not(nullValue())));

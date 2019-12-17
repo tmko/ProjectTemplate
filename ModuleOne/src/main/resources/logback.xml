@@ -1,19 +1,21 @@
 <configuration>
 
-    <property name="LOG_FORMAT" value="%d{HH:mm:ss.SSS} [%method] [%thread] %-5level %logger{36} - %msg%n" />
-    <property name="STOP_BUBBLING_LOG" value="false" />
+    <property name="LOG_FORMAT" value="%d{HH:mm:ss.SSS} [%method] [%thread] %-5level %logger{36} - %msg%n"/>
+    <property name="STOP_BUBBLING_LOG" value="false"/>
 
 
     <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
-        <encoder><pattern>${LOG_FORMAT}</pattern></encoder>
+        <encoder>
+            <pattern>${LOG_FORMAT}</pattern>
+        </encoder>
     </appender>
 
     <logger level="DEBUG" name="tako.kitchen" additivity="${STOP_BUBBLING_LOG}">
-        <appender-ref ref="STDOUT" />
+        <appender-ref ref="STDOUT"/>
     </logger>
 
 
     <root level="DEBUG">
-        <appender-ref ref="STDOUT" />
+        <appender-ref ref="STDOUT"/>
     </root>
 </configuration>
