@@ -5,6 +5,7 @@
     <id>deb</id>
     <baseDirectory>DebianPackageArchive</baseDirectory>
 
+
     <formats><format>dir</format></formats>
 
     <dependencySets>

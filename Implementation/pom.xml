@@ -134,7 +134,7 @@
                             <arguments>
                                 <argument>--build</argument>
                                 <argument>DebianPackageArchive</argument>
-                                <argument>${project.build.finalName}.deb</argument>
+                                <argument>../${project.build.finalName}.deb</argument>
                             </arguments>
                         </configuration>
                     </execution>
