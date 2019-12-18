@@ -1,5 +1,6 @@
 Package: ${company-prefix}${project.artifactId}
 Version: ${project.version}
+Depends: default-jre-headless (>=8.0) | default-jre (>=8.0)
 Section: base
 Priority: optional
 Architecture: all
