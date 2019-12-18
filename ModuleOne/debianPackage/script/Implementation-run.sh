@@ -1,1 +1,2 @@
-java -Dlogback.configurationFile=../conf/logback.xml -jar ../lib/${project.build.finalName}.jar
+HOME="/opt/${company-prefix}${project.artifactId}"
+java -Dlogback.configurationFile=$HOME/conf/logback.xml -jar $HOME/lib/${project.build.finalName}.jar

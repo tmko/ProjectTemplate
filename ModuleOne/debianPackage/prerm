@@ -1,0 +1,3 @@
+#apt remove refuses deleting files, which were not install by it.  The following ensures files are cleaned.
+rm -fr /var/log/${company-prefix}${project.artifactId}/*
+rm -fr /opt/${company-prefix}${project.artifactId}/*

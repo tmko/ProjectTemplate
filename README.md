@@ -20,7 +20,7 @@ Change assembly.xml to select environment folder for packaging.
 ## Create deb Package
 Reference:  
 https://www.tldp.org/HOWTO/html_single/Debian-Binary-Package-Building-HOWTO/  
-Create deb: cd Package && dpkg-deb --build {directory with control} {deb name}  
+Create deb: cd ModuleOne && dpkg-deb --build {directory with control} {deb name}  
 Installation:  sudo atp install ./{deb name}.deb
 remove: sudo apt remove {the Package value in the DEBIAN/control file}
 

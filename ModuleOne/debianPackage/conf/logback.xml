@@ -2,7 +2,7 @@
 
 
     <property name="LOG_FILE" value="LogFile.log"/>
-    <property name="LOG_DIR" value="var/log/${project.groupId}..${project.artifactId}"/>
+    <property name="LOG_DIR" value="/var/log/${company-prefix}${project.artifactId}"/>
 
 
     <property name="LOG_FORMAT" value="%d{HH:mm:ss.SSS} [%method] [%thread] %-5level %logger{36} - %msg%n"/>

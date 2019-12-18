@@ -12,10 +12,10 @@
 
     <dependencySets>
         <dependencySet>
-            <outputDirectory>opt/${project.groupId}..${project.artifactId}/lib</outputDirectory>
+            <outputDirectory>opt/${company-prefix}${project.artifactId}/lib</outputDirectory>
             <unpack>false</unpack>
             <scope>runtime</scope>
-            <directoryMode>555</directoryMode>
+            <directoryMode>755</directoryMode>
             <fileMode>644</fileMode>
         </dependencySet>
     </dependencySets>
@@ -23,8 +23,8 @@
     <fileSets>
         <fileSet>
             <directory>debianPackage</directory>
-            <outputDirectory>var/log/${project.groupId}..${project.artifactId}</outputDirectory>
-            <directoryMode>333</directoryMode>
+            <outputDirectory>var/log/${company-prefix}${project.artifactId}</outputDirectory>
+            <directoryMode>777</directoryMode>
             <excludes>
                 <exclude>**/*</exclude>
             </excludes>
@@ -32,14 +32,16 @@
 
         <fileSet>
             <directory>debianPackage/script</directory>
-            <outputDirectory>opt/${project.groupId}..${project.artifactId}/scripts</outputDirectory>
+            <outputDirectory>opt/${company-prefix}${project.artifactId}/scripts</outputDirectory>
+            <directoryMode>755</directoryMode>
             <fileMode>755</fileMode>
             <filtered>true</filtered>
         </fileSet>
 
         <fileSet>
             <directory>debianPackage/conf</directory>
-            <outputDirectory>opt/${project.groupId}..${project.artifactId}/conf</outputDirectory>
+            <outputDirectory>opt/${company-prefix}${project.artifactId}/conf</outputDirectory>
+            <directoryMode>755</directoryMode>
             <fileMode>555</fileMode>
             <filtered>true</filtered>
         </fileSet>

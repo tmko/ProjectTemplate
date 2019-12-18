@@ -1,7 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xmlns="http://maven.apache.org/POM/4.0.0"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project>
 
     <modules>
         <module>ModuleOne</module>
@@ -31,7 +29,9 @@
         <maven.compiler.target>1.8</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
-        <main-class>main-class-should-be-set-per-module</main-class>
+        <!-- finally value should contains letter only -->
+        <main-class>override-this-tag-value-within-each-module</main-class>
+        <company-prefix>tako</company-prefix>
     </properties>
 
     <!-- factor out common dependencies, centralize version control -->
@@ -155,7 +155,7 @@
                                 <arguments>
                                     <argument>--build</argument>
                                     <argument>DebianPackageArchive</argument>
-                                    <argument>../${project.build.finalName}.deb</argument>
+                                    <argument>../${company-prefix}${project.artifactId}-${project.version}.deb</argument>
                                 </arguments>
                             </configuration>
                         </execution>

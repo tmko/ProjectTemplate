@@ -1,4 +1,4 @@
-Package: ${project.artifactId}
+Package: ${company-prefix}${project.artifactId}
 Version: ${project.version}
 Section: base
 Priority: optional
